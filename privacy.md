@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Privacy Policy
+permalink: /privacy/
 ---
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16">
