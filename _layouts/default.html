@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+
+  {% seo %}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: { DEFAULT: '#09090b', secondary: '#0c0c10', tertiary: '#18181b' },
+            border: '#27272a',
+            text: { DEFAULT: '#e4e4e7', muted: '#71717a' },
+            purple: '#a855f7',
+            cyan: '#06b6d4',
+            blue: '#38bdf8',
+          },
+          fontFamily: {
+            sans: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
+
+  <style>
+    /* Base styles */
+    body {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background-color: #09090b;
+      color: #e4e4e7;
+    }
+
+    /* Subtle scanlines overlay */
+    .scanlines {
+      position: relative;
+    }
+    .scanlines::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Noise texture overlay */
+    .noise::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Terminal cursor blink */
+    .cursor::after {
+      content: '▋';
+      animation: blink 1s step-end infinite;
+      color: #a855f7;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Grid pattern background */
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(39, 39, 42, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(39, 39, 42, 0.3) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Code block styling */
+    .highlight {
+      background: #0c0c10;
+      border: 1px solid #27272a;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .highlight pre {
+      margin: 0;
+      padding: 1rem;
+    }
+    pre code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* Syntax highlighting - terminal theme */
+    .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr { color: #a855f7; }
+    .highlight .s, .highlight .s1, .highlight .s2, .highlight .se { color: #06b6d4; }
+    .highlight .c, .highlight .c1, .highlight .cm { color: #71717a; }
+    .highlight .nc, .highlight .nf, .highlight .nn { color: #38bdf8; }
+    .highlight .mi, .highlight .mf, .highlight .mh { color: #f59e0b; }
+    .highlight .na { color: #06b6d4; }
+    .highlight .nt { color: #a855f7; }
+    .highlight .nv, .highlight .vi { color: #e4e4e7; }
+
+    /* Selection */
+    ::selection {
+      background: rgba(168, 85, 247, 0.3);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  {% include nav.html %}
+
+  <main>
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script>
+    // Mobile nav toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Copy button for code blocks
+    document.querySelectorAll('.code-block').forEach(block => {
+      const copyBtn = block.querySelector('.copy-btn');
+      const code = block.querySelector('code');
+
+      if (copyBtn && code) {
+        copyBtn.addEventListener('click', async () => {
+          await navigator.clipboard.writeText(code.textContent);
+          copyBtn.textContent = 'COPIED';
+          setTimeout(() => {
+            copyBtn.textContent = 'COPY';
+          }, 2000);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

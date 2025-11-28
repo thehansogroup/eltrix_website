@@ -1,0 +1,81 @@
+<aside class="w-64 flex-shrink-0 hidden lg:block">
+  <nav class="sticky top-24 border border-border bg-bg-secondary p-4">
+    <h3 class="font-mono text-xs font-semibold text-text uppercase tracking-wider mb-4">DOCUMENTATION</h3>
+
+    <ul class="space-y-1">
+      {% assign docs = site.docs | sort: 'order' %}
+
+      <!-- Getting Started Section -->
+      <li class="mb-3">
+        <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Getting Started</span>
+        <ul class="mt-2 ml-2 space-y-1 border-l border-border pl-3">
+          {% for doc in docs %}
+            {% if doc.category == 'getting-started' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}"
+                   class="font-mono text-sm block py-1 transition-colors
+                          {% if page.url == doc.url %}text-cyan{% else %}text-text-muted hover:text-text{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+
+      <!-- Deployment Section -->
+      <li class="mb-3">
+        <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Deployment</span>
+        <ul class="mt-2 ml-2 space-y-1 border-l border-border pl-3">
+          {% for doc in docs %}
+            {% if doc.category == 'deployment' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}"
+                   class="font-mono text-sm block py-1 transition-colors
+                          {% if page.url == doc.url %}text-cyan{% else %}text-text-muted hover:text-text{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+
+      <!-- Advanced Section -->
+      <li class="mb-3">
+        <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Advanced</span>
+        <ul class="mt-2 ml-2 space-y-1 border-l border-border pl-3">
+          {% for doc in docs %}
+            {% if doc.category == 'advanced' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}"
+                   class="font-mono text-sm block py-1 transition-colors
+                          {% if page.url == doc.url %}text-cyan{% else %}text-text-muted hover:text-text{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+
+      <!-- Reference Section -->
+      <li>
+        <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Reference</span>
+        <ul class="mt-2 ml-2 space-y-1 border-l border-border pl-3">
+          {% for doc in docs %}
+            {% if doc.category == 'reference' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}"
+                   class="font-mono text-sm block py-1 transition-colors
+                          {% if page.url == doc.url %}text-cyan{% else %}text-text-muted hover:text-text{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</aside>

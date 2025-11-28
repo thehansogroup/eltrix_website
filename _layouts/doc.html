@@ -1,0 +1,213 @@
+---
+layout: default
+---
+
+<div class="min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="flex gap-8">
+      <!-- Sidebar -->
+      {% include doc-sidebar.html %}
+
+      <!-- Mobile sidebar toggle -->
+      <div class="lg:hidden mb-4">
+        <button id="sidebar-toggle" class="flex items-center gap-2 font-mono text-sm text-text-muted hover:text-text border border-border px-3 py-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          MENU
+        </button>
+      </div>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
+        <!-- Breadcrumbs -->
+        <nav class="mb-6">
+          <ol class="flex items-center gap-2 font-mono text-xs text-text-muted">
+            <li><a href="{{ '/' | relative_url }}" class="hover:text-text transition-colors">HOME</a></li>
+            <li>/</li>
+            <li><a href="{{ '/docs/getting-started/' | relative_url }}" class="hover:text-text transition-colors">DOCS</a></li>
+            {% if page.category %}
+            <li>/</li>
+            <li class="uppercase">{{ page.category | replace: '-', ' ' }}</li>
+            {% endif %}
+            <li>/</li>
+            <li class="text-text">{{ page.title | upcase }}</li>
+          </ol>
+        </nav>
+
+        <!-- Article -->
+        <article class="doc-content">
+          <header class="mb-8 pb-6 border-b border-border">
+            <h1 class="text-3xl font-bold text-text mb-2">{{ page.title }}</h1>
+            {% if page.description %}
+            <p class="text-text-muted text-lg">{{ page.description }}</p>
+            {% endif %}
+          </header>
+
+          <div class="prose prose-invert max-w-none
+                      prose-headings:font-sans prose-headings:font-semibold prose-headings:text-text
+                      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border
+                      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+                      prose-p:text-text prose-p:leading-relaxed prose-p:mb-4
+                      prose-a:text-cyan prose-a:no-underline hover:prose-a:underline
+                      prose-strong:text-text prose-strong:font-semibold
+                      prose-code:text-cyan prose-code:bg-bg-tertiary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
+                      prose-pre:bg-bg-secondary prose-pre:border prose-pre:border-border prose-pre:rounded
+                      prose-ul:text-text prose-ul:my-4
+                      prose-ol:text-text prose-ol:my-4
+                      prose-li:text-text prose-li:my-1
+                      prose-table:border prose-table:border-border
+                      prose-th:bg-bg-tertiary prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-mono prose-th:text-sm prose-th:uppercase prose-th:border prose-th:border-border
+                      prose-td:px-4 prose-td:py-2 prose-td:border prose-td:border-border">
+            {{ content }}
+          </div>
+
+          <!-- Prev/Next Navigation -->
+          {% assign docs = site.docs | sort: 'order' %}
+          {% assign current_index = nil %}
+          {% for doc in docs %}
+            {% if doc.url == page.url %}
+              {% assign current_index = forloop.index0 %}
+            {% endif %}
+          {% endfor %}
+
+          {% if current_index %}
+            {% assign prev_index = current_index | minus: 1 %}
+            {% assign next_index = current_index | plus: 1 %}
+            {% assign prev_doc = docs[prev_index] %}
+            {% assign next_doc = docs[next_index] %}
+
+            <nav class="mt-12 pt-6 border-t border-border flex justify-between">
+              {% if prev_doc and prev_index >= 0 %}
+              <a href="{{ prev_doc.url | relative_url }}" class="group flex items-center gap-2 text-text-muted hover:text-text transition-colors">
+                <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                <div>
+                  <div class="font-mono text-xs uppercase tracking-wide">Previous</div>
+                  <div class="font-medium text-text">{{ prev_doc.nav_title | default: prev_doc.title }}</div>
+                </div>
+              </a>
+              {% else %}
+              <div></div>
+              {% endif %}
+
+              {% if next_doc and next_index < docs.size %}
+              <a href="{{ next_doc.url | relative_url }}" class="group flex items-center gap-2 text-text-muted hover:text-text transition-colors text-right">
+                <div>
+                  <div class="font-mono text-xs uppercase tracking-wide">Next</div>
+                  <div class="font-medium text-text">{{ next_doc.nav_title | default: next_doc.title }}</div>
+                </div>
+                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              {% else %}
+              <div></div>
+              {% endif %}
+            </nav>
+          {% endif %}
+        </article>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile sidebar -->
+<div id="mobile-sidebar" class="fixed inset-0 bg-black/80 z-50 hidden lg:hidden">
+  <div class="w-72 h-full bg-bg border-r border-border overflow-y-auto">
+    <div class="p-4 border-b border-border flex justify-between items-center">
+      <span class="font-mono text-sm font-semibold uppercase">Navigation</span>
+      <button id="sidebar-close" class="text-text-muted hover:text-text">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="p-4">
+      {% assign docs = site.docs | sort: 'order' %}
+      <ul class="space-y-4">
+        <li>
+          <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Getting Started</span>
+          <ul class="mt-2 space-y-1">
+            {% for doc in docs %}
+              {% if doc.category == 'getting-started' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}" class="font-mono text-sm block py-1.5 {% if page.url == doc.url %}text-cyan{% else %}text-text-muted{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Deployment</span>
+          <ul class="mt-2 space-y-1">
+            {% for doc in docs %}
+              {% if doc.category == 'deployment' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}" class="font-mono text-sm block py-1.5 {% if page.url == doc.url %}text-cyan{% else %}text-text-muted{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Advanced</span>
+          <ul class="mt-2 space-y-1">
+            {% for doc in docs %}
+              {% if doc.category == 'advanced' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}" class="font-mono text-sm block py-1.5 {% if page.url == doc.url %}text-cyan{% else %}text-text-muted{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <span class="font-mono text-xs text-text-muted uppercase tracking-wide">Reference</span>
+          <ul class="mt-2 space-y-1">
+            {% for doc in docs %}
+              {% if doc.category == 'reference' %}
+              <li>
+                <a href="{{ doc.url | relative_url }}" class="font-mono text-sm block py-1.5 {% if page.url == doc.url %}text-cyan{% else %}text-text-muted{% endif %}">
+                  {{ doc.nav_title | default: doc.title }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<script>
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebarClose = document.getElementById('sidebar-close');
+  const mobileSidebar = document.getElementById('mobile-sidebar');
+
+  if (sidebarToggle && mobileSidebar) {
+    sidebarToggle.addEventListener('click', () => {
+      mobileSidebar.classList.remove('hidden');
+    });
+  }
+
+  if (sidebarClose && mobileSidebar) {
+    sidebarClose.addEventListener('click', () => {
+      mobileSidebar.classList.add('hidden');
+    });
+
+    mobileSidebar.addEventListener('click', (e) => {
+      if (e.target === mobileSidebar) {
+        mobileSidebar.classList.add('hidden');
+      }
+    });
+  }
+</script>

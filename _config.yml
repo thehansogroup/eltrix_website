@@ -1,0 +1,42 @@
+title: Eltrix
+tagline: The Elixir Matrix Server
+description: A cloud-native Matrix homeserver built on Elixir. Horizontal scaling, native Kubernetes support, OTP reliability.
+url: ""
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "doc"
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

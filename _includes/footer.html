@@ -1,0 +1,57 @@
+<footer class="border-t border-border bg-bg mt-auto">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <a href="{{ '/' | relative_url }}" class="flex items-center gap-2 mb-4">
+          <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Eltrix" class="h-6 w-auto">
+          <span class="font-mono font-semibold tracking-tight text-text">ELTRIX</span>
+        </a>
+        <p class="text-sm text-text-muted leading-relaxed">
+          Cloud-native Matrix homeserver built on Elixir.
+        </p>
+      </div>
+
+      <!-- Docs -->
+      <div>
+        <h4 class="font-mono text-xs font-semibold text-text uppercase tracking-wider mb-4">DOCS</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ '/docs/getting-started/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Getting Started</a></li>
+          <li><a href="{{ '/docs/installation/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Installation</a></li>
+          <li><a href="{{ '/docs/configuration/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Configuration</a></li>
+          <li><a href="{{ '/docs/kubernetes/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Kubernetes</a></li>
+        </ul>
+      </div>
+
+      <!-- Community -->
+      <div>
+        <h4 class="font-mono text-xs font-semibold text-text uppercase tracking-wider mb-4">COMMUNITY</h4>
+        <ul class="space-y-2">
+          <li><a href="https://github.com/eltrix/eltrix" target="_blank" rel="noopener" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">GitHub</a></li>
+          <li><a href="https://matrix.to/#/#eltrix:matrix.org" target="_blank" rel="noopener" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">#eltrix:matrix.org</a></li>
+          <li><a href="https://github.com/eltrix/eltrix/issues" target="_blank" rel="noopener" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Issue Tracker</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h4 class="font-mono text-xs font-semibold text-text uppercase tracking-wider mb-4">LEGAL</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ '/privacy/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Privacy Policy</a></li>
+          <li><a href="{{ '/imprint/' | relative_url }}" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Imprint</a></li>
+          <li><a href="https://github.com/eltrix/eltrix/blob/main/LICENSE" target="_blank" rel="noopener" class="font-mono text-sm text-text-muted hover:text-cyan transition-colors">Apache 2.0 License</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-border mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="font-mono text-xs text-text-muted uppercase tracking-wide">
+        © 2025 ELTRIX // APACHE 2.0
+      </p>
+      <p class="font-mono text-xs text-text-muted">
+        Built with <span class="text-purple">Elixir</span> + <span class="text-cyan">OTP</span>
+      </p>
+    </div>
+  </div>
+</footer>
